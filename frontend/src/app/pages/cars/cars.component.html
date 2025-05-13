@@ -58,6 +58,7 @@
               <th>Üzemanyag</th>
               <th>Fogyasztás</th>
               <th>Kezdő km</th>
+              <th>Törlés</th>
             </tr>
           </thead>
           <tbody>
@@ -67,6 +68,11 @@
               <td>{{ car.fuel }}</td>
               <td>{{ car.consumption }} l/100km</td>
               <td>{{ car.initialOdometer }} km</td>
+              <td>
+                <button (click)="deleteCar(car.id!)" class="btn btn-danger btn-sm">
+                  Törlés
+                </button>
+              </td>
             </tr>
           </tbody>
         </table>
