@@ -1,0 +1,44 @@
+# Új utazás létrehozása visszaúttal
+POST http://localhost:3000/trips
+Content-Type: application/json
+
+{
+  "carId": 3,
+  "driverId": 3,
+  "date": "2025-04-26",
+  "type": "céges",
+  "startLocation": "Budapest",
+  "endLocation": "Szeged",
+  "distance": 180,
+  "newOdometer": 25000,
+  "returnTrip": true
+}
+
+###
+
+# Új utazás létrehozása visszaútnélkül
+POST http://localhost:3000/trips
+Content-Type: application/json
+
+{
+  "carId": 4,
+  "driverId": 2,
+  "date": "2025-04-27",
+  "type": "magán",
+  "startLocation": "Budapest",
+  "endLocation": "Debrecen",
+  "distance": 220,
+  "newOdometer": 25200,
+  "returnTrip": false
+}
+
+###
+
+# Utazás törlése ID alapján
+DELETE http://localhost:3000/trips/8
+Accept: application/json
+
+###
+
+# Utazások listázása
+GET http://localhost:3000/trips

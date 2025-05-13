@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="hu">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jelentések</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  </head>
+  <body>
+    <div class="container mt-4">
+      <h1 class="mb-4 text-center text-primary">Havi Jelentések</h1>
+    </div>
+<label>Év:
+  <input type="number" [(ngModel)]="selectedYear" min="2000" max="2100">
+</label>
+
+<label>Hónap:
+  <input type="number" [(ngModel)]="selectedMonth" min="1" max="12">
+</label>
+
+<label>Rendszám:
+  <select [(ngModel)]="selectedLicensePlate">
+    <option value="">-- válassz rendszámot --</option>
+    <option *ngFor="let car of cars" [value]="car.licensePlate">
+      {{ car.licensePlate }}
+    </option>
+  </select>
+</label>
+
+<button (click)="getReport()">Jelentés lekérése</button>
+
+<div *ngIf="report">
+  <h3>Autó adatai</h3>
+  <p><strong>Rendszám:</strong> {{ report.car.licensePlate }}</p>
+  <p><strong>Típus:</strong> {{ report.car.type }}</p>
+  <p><strong>Fogyasztás:</strong> {{ report.car.consumption }} l/100km</p>
+
+  <h3>Összesítés</h3>
+  <p><strong>Megtett távolság:</strong> {{ report.totalDistance }} km</p>
+  <p><strong>Üzemanyag költség:</strong> {{ report.totalFuelCost | number:'1.0-0' }} Ft</p>
+  <p><strong>Átalány költség:</strong> {{ report.totalFlatCost }} Ft</p>
+  <p><strong>Összes költség:</strong> {{ report.totalCost | number:'1.0-0' }} Ft</p>
+</div>
+</body>
+</html>

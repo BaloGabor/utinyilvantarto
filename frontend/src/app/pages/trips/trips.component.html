@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="hu">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sofőrök Nyilvántartása</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  </head>
+  <body>
+    <div class="container mt-4">
+      <h1 class="mb-4 text-center text-primary">Sofőrök Nyilvántartása</h1>
+  <!-- Gomb az űrlap megjelenítéséhez -->
+  <button class="btn btn-primary mb-3" (click)="showForm = !showForm">
+    {{ showForm ? 'Űrlap bezárása' : 'Új út hozzáadása' }}
+  </button>
+
+  <!-- Trip hozzáadása űrlap -->
+  <form *ngIf="showForm" (ngSubmit)="addOrUpdateTrip()" #tripForm="ngForm" class="mb-4 border p-3 rounded bg-light">
+    <div class="col">
+      <label>Vezető:</label>
+      <select class="form-control" required [(ngModel)]="newTrip.driverId" name="driverId">
+        <option *ngFor="let driver of drivers" [value]="driver.id">
+          {{ driver.name }} (érv.: {{ driver.licenseExpiry | date: 'yyyy.MM.dd' }})
+        </option>
+      </select>
+    </div>
+      <div class="col">
+        <label>Autó ID:</label>
+        <input type="number" class="form-control" required [(ngModel)]="newTrip.carId" name="carId">
+      </div>
+    <div class="row mb-2">
+      <div class="col">
+        <label>Dátum:</label>
+        <input type="date" class="form-control" required [(ngModel)]="newTrip.date" name="date">
+      </div>
+      <div class="col">
+        <label>Típus:</label>
+        <select class="form-control" required [(ngModel)]="newTrip.type" name="type">
+          <option value="céges">Céges</option>
+          <option value="magán">Magán</option>
+        </select>
+      </div>
+    </div>
+    <div class="row mb-2">
+      <div class="col">
+        <label>Indulás:</label>
+        <input type="text" class="form-control" required [(ngModel)]="newTrip.startLocation" name="startLocation">
+      </div>
+      <div class="col">
+        <label>Érkezés:</label>
+        <input type="text" class="form-control" required [(ngModel)]="newTrip.endLocation" name="endLocation">
+      </div>
+    </div>
+    <div class="row mb-2">
+      <div class="col">
+        <label>Megtett km:</label>
+        <input type="number" class="form-control" required [(ngModel)]="newTrip.distance" name="distance">
+      </div>
+      <div class="col">
+        <label>Új km-óra állás:</label>
+        <input type="number" class="form-control" required [(ngModel)]="newTrip.newOdometer" name="newOdometer">
+      </div>
+    </div>
+    <div class="form-check my-2">
+      <input class="form-check-input" type="checkbox" id="returnTrip" [(ngModel)]="newTrip.returnTrip" name="returnTrip">
+      <label class="form-check-label" for="returnTrip">
+        Visszaút is van
+      </label>
+    </div>
+
+    <button class="btn btn-success" type="submit">Mentés</button>
+  </form>
+
+  <!-- Táblázat -->
+  <table class="table table-striped table-bordered">
+    <thead class="table-light">
+      <tr>
+        <th>Vezető</th>
+        <th>Autó</th>
+        <th>Dátum</th>
+        <th>Típus</th>
+        <th>Indulás</th>
+        <th>Érkezés</th>
+        <th>Megtett km</th>
+        <th>Új km-óra állás</th>
+        <th>Műveletek</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let trip of trips">
+        <td>{{ trip.driver?.name }}</td>
+        <td>{{ trip.car?.licensePlate }}</td>
+        <td>{{ trip.date | date: 'yyyy.MM.dd' }}</td>
+        <td>{{ trip.type }}</td>
+        <td>{{ trip.startLocation }}</td>
+        <td>{{ trip.endLocation }}</td>
+        <td>{{ trip.distance }} km</td>
+        <td>{{ trip.newOdometer }} km</td>
+        <td>
+          <button class="btn btn-sm btn-warning me-1" (click)="startEdit(trip)">Szerkesztés</button>
+          <button class="btn btn-sm btn-danger" (click)="deleteTrip(trip.id)">Törlés</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+</body>
+</html>

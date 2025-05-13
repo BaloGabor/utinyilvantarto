@@ -1,0 +1,42 @@
+# Új autó létrehozása
+POST http://localhost:3000/cars
+Content-Type: application/json
+
+{
+  "licensePlate": "BFG-487",
+  "type": "Volkswagen Polo",
+  "fuel": "benzin",
+  "consumption": 6.8,
+  "initialOdometer": 20000
+}
+###
+POST http://localhost:3000/cars
+Content-Type: application/json
+
+{
+  "licensePlate": "KLM-123",
+  "type": "Toyota Corolla",
+  "fuel": "benzin",
+  "consumption": 5.5,
+  "initialOdometer": 15000
+}
+
+###
+
+POST http://localhost:3000/cars
+Content-Type: application/json
+
+{
+  "licensePlate": "XYZ-456",
+  "type": "Ford Focus",
+  "fuel": "dízel",
+  "consumption": 4.9,
+  "initialOdometer": 32000
+}
+
+###
+DELETE http://localhost:3000/cars/2
+Accept: application/json
+
+###
+GET http://localhost:3000/cars

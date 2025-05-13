@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="hu">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sofőrök Nyilvántartása</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  </head>
+  <body>
+    <div class="container mt-4">
+      <h1 class="mb-4 text-center text-primary">Sofőrök Nyilvántartása</h1>
+      
+      <!-- Új vezető hozzáadása gomb -->
+      <div class="d-flex justify-content-center mb-3">
+        <button (click)="showAddDriverForm = !showAddDriverForm" class="btn btn-primary shadow-lg">
+          {{ showAddDriverForm ? 'Mégse' : 'Új sofőr hozzáadása' }}
+        </button>
+      </div>
+
+      <!-- Form a vezető hozzáadásához -->
+      <div *ngIf="showAddDriverForm" class="card p-4 mb-4 shadow-lg">
+        <h4 class="mb-3 text-center">Új sofőr hozzáadása</h4>
+        <form (ngSubmit)="addDriver()">
+          <div class="mb-3">
+            <label class="form-label">Név:</label>
+            <input [(ngModel)]="newDriver.name" name="name" class="form-control" required />
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Születési idő:</label>
+            <input type="date" [(ngModel)]="newDriver.birthDate" name="birthDate" class="form-control" required />
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Lakcím:</label>
+            <input [(ngModel)]="newDriver.address" name="address" class="form-control" required />
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Jogosítvány szám:</label>
+            <input [(ngModel)]="newDriver.licenseNumber" name="licenseNumber" class="form-control" required />
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Jogosítvány lejárat:</label>
+            <input type="date" [(ngModel)]="newDriver.licenseExpiry" name="licenseExpiry" class="form-control" />
+          </div>
+          <div class="d-flex justify-content-center">
+            <button type="submit" class="btn btn-success">Mentés</button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Vezetők listázása táblázatban -->
+      <div class="card shadow-lg p-3 mb-4">
+        <h4 class="text-center mb-3">Sofőrök listája</h4>
+        <table class="table table-striped table-hover">
+          <thead class="table-dark">
+            <tr>
+              <th>Név</th>
+              <th>Születési idő</th>
+              <th>Lakcím</th>
+              <th>Jogosítvány szám</th>
+              <th>Jogosítvány lejárat</th>
+              <th>Vezető törlése</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let driver of drivers" [ngClass]="{'expired-license': isLicenseExpired(driver.licenseExpiry)}">
+              <td>{{ driver.name }}</td>
+              <td>{{ driver.birthDate | date: 'yyyy.MM.dd' }}</td>
+              <td>{{ driver.address }}</td>
+              <td>{{ driver.licenseNumber }}</td>
+              <td>
+                {{ driver.licenseExpiry ? (driver.licenseExpiry | date: 'yyyy.MM.dd') : 'N/A' }}
+              </td>
+              <td *ngIf="driver.id">
+                <button (click)="deleteDriver(driver.id)" class="btn btn-danger btn-sm">Törlés</button>
+              </td>              
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>

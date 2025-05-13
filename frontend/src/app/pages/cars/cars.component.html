@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="hu">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Autók Nyilvántartó</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  </head>
+  <body>
+    <div class="container mt-4">
+      <h1 class="mb-4 text-center text-primary">Autók Nyilvántartása</h1>
+      
+      <!-- Új autó hozzáadása gomb -->
+      <div class="d-flex justify-content-center mb-3">
+        <button (click)="showAddCarForm = !showAddCarForm" class="btn btn-primary shadow-lg">
+          {{ showAddCarForm ? 'Mégse' : 'Új autó hozzáadása' }}
+        </button>
+      </div>
+
+      <!-- Form a hozzáadásra -->
+      <div *ngIf="showAddCarForm" class="card p-4 mb-4 shadow-lg">
+        <h4 class="mb-3 text-center">Új autó hozzáadása</h4>
+        <form (ngSubmit)="addCar()">
+          <div class="mb-3">
+            <label class="form-label">Rendszám:</label>
+            <input [(ngModel)]="newCar.licensePlate" name="licensePlate" class="form-control" required />
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Típus:</label>
+            <input [(ngModel)]="newCar.type" name="type" class="form-control" required />
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Üzemanyag:</label>
+            <input [(ngModel)]="newCar.fuel" name="fuel" class="form-control" required />
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Fogyasztás (liter/100km):</label>
+            <input type="number" [(ngModel)]="newCar.consumption" name="consumption" class="form-control" required />
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Kezdő km óra állás:</label>
+            <input type="number" [(ngModel)]="newCar.initialOdometer" name="initialOdometer" class="form-control" required />
+          </div>
+          <div class="d-flex justify-content-center">
+            <button type="submit" class="btn btn-success">Mentés</button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Autók listázása táblázatban -->
+      <div class="card shadow-lg p-3 mb-4">
+        <h4 class="text-center mb-3">Autók listája</h4>
+        <table class="table table-striped table-hover">
+          <thead class="table-dark">
+            <tr>
+              <th>Rendszám</th>
+              <th>Típus</th>
+              <th>Üzemanyag</th>
+              <th>Fogyasztás</th>
+              <th>Kezdő km</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let car of cars">
+              <td>{{ car.licensePlate }}</td>
+              <td>{{ car.type }}</td>
+              <td>{{ car.fuel }}</td>
+              <td>{{ car.consumption }} l/100km</td>
+              <td>{{ car.initialOdometer }} km</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </body>
+</html>

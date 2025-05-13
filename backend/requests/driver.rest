@@ -1,0 +1,52 @@
+# Új sofőr létrehozása
+POST http://localhost:3000/drivers
+Content-Type: application/json
+
+{
+  "name": "Kiss Péter",
+  "birthDate": "1985-03-12",
+  "address": "Budapest, Kossuth Lajos utca 15",
+  "licenseNumber": "ABC12345",
+  "licenseExpiry": "2027-05-10"
+}
+###
+POST http://localhost:3000/drivers
+Content-Type: application/json
+
+{
+  "name": "Nagy Anna",
+  "birthDate": "1990-08-22",
+  "address": "Debrecen, Piac utca 20",
+  "licenseNumber": "XYZ67890",
+  "licenseExpiry": "2026-11-30"
+}
+###
+POST http://localhost:3000/drivers
+Content-Type: application/json
+
+{
+  "name": "Tóth Gábor",
+  "birthDate": "1978-01-17",
+  "address": "Szeged, Petőfi Sándor utca 5",
+  "licenseNumber": "DEF45678",
+  "licenseExpiry": "2028-04-15"
+}
+###
+# Sofőr törlése ID alapján
+DELETE http://localhost:3000/drivers/2
+Accept: application/json
+
+###
+# Sofőrök listázása
+GET http://localhost:3000/drivers
+
+###
+# Sofőr módosítása
+PUT http://localhost:3000/drivers/1
+Content-Type: application/json
+
+{
+  "name": "Kiss Béla",
+  "address": "Debrecen, Példautca 12.",
+  "licenseExpiry": "2028-05-01"
+}
